@@ -1,5 +1,6 @@
 #
 # TODO: default config for PLD - edit /etc/changetrack.conf
+%include        /usr/lib/rpm/macros.perl
 
 %define		src_name	change
 %define		src_ver		4_5
@@ -16,7 +17,6 @@ Source1:	%{name}-cron
 URL:		http://changetrack.sourceforge.net/
 BuildRequires:	rpm-perlprov
 Requires:	crondaemon
-Requires:	perl-File-NCopy
 Requires:	perl-modules
 Requires:	perl-tools
 Requires:	rcs
@@ -37,17 +37,15 @@ recovery of any stage of revision.
 %prep
 %setup -q -n %{name}
 
-%build
-
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_sysconfdir},/etc/cron.d,%{_var}/lib/%{name}}
 
 install changetrack $RPM_BUILD_ROOT%{_bindir}
-install changetrack.man $RPM_BUILD_ROOT%{_mandir}/man1
+install changetrack.man $RPM_BUILD_ROOT%{_mandir}/man1/changetrack.1
 install changetrack.conf $RPM_BUILD_ROOT%{_sysconfdir}
-install %SOURCE1 $RPM_BUILD_ROOT/etc/cron.d/%{name}
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -58,5 +56,5 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}.conf
 %attr(755,root,root) %{_bindir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) /etc/cron.d/%{name}
-%{_mandir}/man1/*
+%{_mandir}/man1/changetrack.1*
 %dir %{_var}/lib/%{name}
