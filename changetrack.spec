@@ -1,6 +1,5 @@
 #
 # TODO: default config for PLD - edit /etc/changetrack.conf
-%include        /usr/lib/rpm/macros.perl
 
 %define		src_name	change
 %define		src_ver		4_5
